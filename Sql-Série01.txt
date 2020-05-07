@@ -1,0 +1,47 @@
+/*Ex 1*/
+SELECT`ville_nom`,`ville_population_2012`FROM`villes_france_free`WHERE`ville_population_2012`ORDER BY`ville_population_2012`DESC LIMIT 10;
+/*Ex 2*/
+SELECT`ville_nom`,`ville_surface`FROM`villes_france_free`WHERE`ville_surface`ORDER BY`ville_surface`DESC LIMIT 50;
+/*Ex 3*/
+SELECT`ville_nom`,`ville_departement`FROM`villes_france_free`WHERE`ville_departement`LIKE'97%';
+/*Ex 4*/
+SELECT `ville_nom`,`ville_population_2012`, departement_nom
+FROM `villes_france_free`
+LEFT JOIN departement ON departement_code = ville_departement
+ORDER BY `ville_population_2012` DESC 
+LIMIT 10;
+ /*Ex 5*/
+SELECT `departement_nom`, `departement_code`, ville_commune
+FROM `departement`
+LEFT JOIN villes_france_free ON ville_id = departement_id
+ORDER BY ville_commune DESC;
+/*Ex 6*/
+SELECT`departement_nom`, `ville_departement`, SUM(ville_surface) AS dpt_surface 
+FROM`departement`
+LEFT JOIN villes_france_free ON ville_departement = departement_code
+GROUP BY`ville_departement`
+ORDER BY dpt_surface DESC
+LIMIT 10;
+/*Ex 7*/
+SELECT COUNT(`ville_nom`)
+FROM`villes_france_free` 
+WHERE`ville_nom`LIKE'Saint%';
+/*Ex 8*/
+SELECT `ville_nom`, COUNT(*) AS valeurs
+FROM `villes_france_free` 
+GROUP BY `ville_nom` 
+ORDER BY valeurs DESC;
+/*Ex 9*/
+SELECT`ville_nom`,`ville_surface`
+FROM`villes_france_free` 
+WHERE`ville_surface`>(SELECT AVG(`ville_surface`)FROM`villes_france_free`);
+/*Ex 10*/
+SELECT `ville_departement`, SUM(`ville_population_2012`) AS n
+FROM `villes_france_free` 
+GROUP BY `ville_departement`
+HAVING n > 2000000
+ORDER BY n DESC;
+/*Ex 11*/
+UPDATE `villes_france_free` 
+SET ville_nom = REPLACE(ville_nom, '-', ' ') 
+WHERE `ville_nom` LIKE 'Saint-%';
